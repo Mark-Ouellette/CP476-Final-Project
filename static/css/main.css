@@ -238,14 +238,21 @@ header {
 
 
 .section-tabs article {
-  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.section-tabs article img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  padding-right: 5px;
 }
 
 .section-tabs article .name {
   font-size: 18px;
 }
 
-.section-tabs article .walking-distance {
+.section-tabs article .bar-address {
   color: #6e6e6e;
   font-size: 13px;
   margin: 0;
@@ -286,3 +293,4 @@ header {
 .leaflet-popup-content p {
   margin: 10px 0 ;
 }
+

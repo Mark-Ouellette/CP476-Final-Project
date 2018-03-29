@@ -151,7 +151,7 @@ header {
 
 /*
  * Sign up
- */ 
+  */
 
 .signup-section .section-content h2 {
   font-size: 30px;
@@ -202,10 +202,10 @@ header {
   color: #db4437;
 }
 
-
+*/
 /*
  * Sign up
- */ 
+ */
 
 .about-section h2 {
   font-size: 30px;
@@ -220,7 +220,6 @@ header {
 /* 
  * Home
  */
-
 .section-tabs {
   float: left;
   width: 340px;

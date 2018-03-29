@@ -21,10 +21,14 @@ def index():
 def about():
     return render_template("about.html")
 
+@app.route("/post")
+def post():
+	return render_template("post.html")
+
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
 	if 'email' in session:
-		redirect(url_for('home'))
+		redirect(url_for('index'))
 
 	form = SignupForm()
 
@@ -38,14 +42,14 @@ def signup():
 			db.session.commit()
 
 			session['email'] = newUser.email
-			return redirect(url_for('home'))
+			return redirect(url_for('index'))
 	elif request.method == 'GET':
 		return render_template("signup.html", form=form)
 
 @app.route("/login", methods=['GET','POST'])
 def login():
 	if 'email' in session:
-		redirect(url_for('home'))
+		redirect(url_for('index'))
 
 	form = LoginForm()
 
@@ -59,7 +63,7 @@ def login():
 			user = User.query.filter_by(email=email).first()
 			if user is not None and user.check_password(password):
 				session['email'] = email
-				return redirect(url_for('home'))
+				return redirect(url_for('index'))
 			else:
 				# TODO: Expand to say whether the email or password failed
 				form.email.errors.append("The user could not be validated")
@@ -72,10 +76,11 @@ def logout():
 	session.pop('email', None)
 	return redirect(url_for('index'))
 
-@app.route("/home", methods=['GET','POST'])
-def home():
-	if 'email' not in session:
-		return redirect(url_for('login'))
+
+@app.route("/maps", methods=['GET','POST'])
+def maps():
+	#if 'email' not in session:
+	#	return redirect(url_for('login'))
 
 	form = AddressForm()
 	places = []
@@ -83,7 +88,7 @@ def home():
 
 	if request.method == 'POST':
 		if not form.validate():
-			return render_template('home.html', form=form)
+			return render_template('maps.html', form=form)
 		else:
 			address = form.address.data
 
@@ -95,10 +100,10 @@ def home():
 			places = p.query(lat, lng)
 			print (places)
 
-			return render_template('home.html', form=form, my_coordinates=my_coordinates, places=places)
+			return render_template('maps.html', form=form, my_coordinates=my_coordinates, places=places)
 			
 	elif request.method == 'GET':
-		return render_template("home.html", form=form, my_coordinates=my_coordinates, places=places)
+		return render_template("maps.html", form=form, my_coordinates=my_coordinates, places=places)
 
 @app.route("/add/ingredient", methods=['GET','POST'])
 def addIngredient():

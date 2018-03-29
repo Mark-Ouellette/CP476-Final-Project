@@ -1,9 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug import generate_password_hash, check_password_hash
-from urllib.parse import urljoin
-from urllib.request import urlopen
-from googleplaces import GooglePlaces, types, lang
+try:
+    from urllib.parse import urljoin
+except ImportError:
+     from urlparse import urljoin    
+try:
+	from urllib.request import urlopen
+except ImportError:
+	from urllib2 import urlopen
 
+from googleplaces import GooglePlaces, types, lang
 
 import geocoder
 import json

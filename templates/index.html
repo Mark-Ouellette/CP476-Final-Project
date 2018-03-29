@@ -5,20 +5,67 @@
     <div class="container">
         
         <div class="section-content">
-            <h2>Discover places near you.</h2>
-            <a href="{{ url_for('signup') }}" class="btn-primary">Sign up</a>
-            <a href="{{ url_for('login') }}" class="btn-primary">login</a>
-            <a href="{{ url_for('about') }}" class="btn-secondary">Learn more</a>
-            <a href="{{ url_for('addIngredient') }}" class="btn-secondary">Add an Ingredient</a>
-
+            <br>
+            <br>
+            <h2>Discover the communities favourite drink recepies</h2>
+            <br>
         </div>
-        
+
+        <div class="list-group">
+          <a href="{{ url_for('post') }}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Coke and Whisky</h5>
+              <small>3 days ago</small>
+            </div>
+            <p class="mb-1">Real simple one here you basically take some good ol coca cola and add about a shot of whisky (2 or 3 if ur feeling frisky)</p>
+            <small>Written By: Mark Ouellette</small>
+            <ul class="list-inline list-unstyled">
+            <li class="list-inline-item"><span><i class="fa fa-calendar"></i> 2 days, 8 hours </span></li>
+            <li class="list-inline-item">|</li>
+            <span><i class="fa fa-comment"></i> 2 comments</span>
+            <li class="list-inline-item">|</li>
+            <li class="list-inline-item">
+               <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+            </li>
+            <li class="list-inline-item">|</li>
+            <li class="list-inline-item">
+            <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
+              <span><i class="fa fa-facebook-square"></i></span>
+              <span><i class="fa fa-twitter-square"></i></span>
+              <span><i class="fa fa-google-plus-square"></i></span>
+            </li>
+            </ul>
+          </a>
+          <br>
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">List group item heading</h5>
+              <small class="text-muted">3 days ago</small>
+            </div>
+            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            <small class="text-muted">Donec id elit non mi porta.</small>
+          </a>
+          <br>
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">List group item heading</h5>
+              <small class="text-muted">3 days ago</small>
+            </div>
+            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            <small class="text-muted">Donec id elit non mi porta.</small>
+          </a>
+        </div>
+        <!--
         <div class="section-device">
             <img src="static/img/device.png">
                 </div>
         
         <div class="clearfix"></div>
-        
+        -->
     </div>
 </main>
 {% endblock %}

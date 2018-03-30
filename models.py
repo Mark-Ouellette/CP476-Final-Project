@@ -61,6 +61,11 @@ class Recipe(db.Model):
 	ingredients = db.relationship('Ingredient', secondary=ingredientsPerRecipe, lazy='subquery', 
 		backref=db.backref('ingredients', lazy=True))
 
+	def __init__(self, recipetitle, recipedesc, ingredients):
+		self.ingredients = ingredients
+		self.recipetitle = recipetitle.title()
+		self.recipedesc = recipedesc.title()
+
 class Ingredient(db.Model):
 	__tablename__ = 'ingredients'
 	ingredientid = db.Column(db.Integer, primary_key=True)

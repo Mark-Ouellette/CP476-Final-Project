@@ -28,7 +28,8 @@ class AddArticleForm(FlaskForm):
 	ingredientOptions=[]
 	recipetitle = StringField('Title', validators=[DataRequired("Please enter an article title"), Length(max=100, message="Titles may not be longer than 100 characters")])
 	recipeingredients = SelectField('Ingredients Included:', choices=ingredientOptions)
-	recipetext = TextAreaField('Article Text')
+	recipedesc = TextAreaField('Article Text')
+	submit = SubmitField('Add')
 
 	def initIngredients(ingredients):
 		self.ingredients = ingredients

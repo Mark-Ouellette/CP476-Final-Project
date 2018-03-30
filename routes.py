@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from models import db, User, GPlace, Ingredient, Recipe
-from forms import SignupForm, LoginForm, AddressForm, IngredientForm
+from forms import SignupForm, LoginForm, AddressForm, IngredientForm, AddArticleForm
 from sqlalchemy import exc
 
 app = Flask(__name__)
@@ -104,6 +104,32 @@ def maps():
 	elif request.method == 'GET':
 		return render_template("maps.html", form=form, my_coordinates=my_coordinates, places=places)
 
+@app.route("/add/recipe", methods=['GET','POST'])
+def addrecipe():
+    if 'email' in session:
+        return render_template("newrecipe.html")
+    else:
+        return redirect(url_for('login'))
+
+    recForm = AddArticleForm()
+    if request.method == 'POST':
+        if not recForm.validate():
+            return render_template('newrecipe.html', recForm=recForm)
+        else:
+            newRec = Recipe(recForm.recipeingreedients.data, recForm.recipetitle.data, recForm.recipedesc.data)
+        
+        try:
+            db.session.add(newRec)
+            db.session.commit()
+            message = "Article added"
+        except exc.IntegrityError as e:
+            db.session.rollback()
+        finally:
+            return render_template("newrecipe.html", recForm=recForm)
+
+    elif request.method == 'GET':
+        return render_template('newrecipe.html', recForm=recForm)
+
 @app.route("/add/ingredient", methods=['GET','POST'])
 def addIngredient():
 	if 'email' not in session:
@@ -135,3 +161,11 @@ def addIngredient():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+
+
+

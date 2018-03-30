@@ -107,29 +107,33 @@ def maps():
 
 @app.route("/add/recipe", methods=['GET','POST'])
 def addrecipe():
-    if 'email' in session:
-        return render_template("newrecipe.html")
-    else:
-        return redirect(url_for('login'))
+	if 'email' not in session:
+		return redirect(url_for('login'))
 
-    recForm = AddArticleForm()
-    if request.method == 'POST':
-        if not recForm.validate():
-            return render_template('newrecipe.html', recForm=recForm)
-        else:
-            newRec = Recipe(recForm.recipeingreedients.data, recForm.recipetitle.data, recForm.recipedesc.data)
-        
-        try:
-            db.session.add(newRec)
-            db.session.commit()
-            message = "Article added"
-        except exc.IntegrityError as e:
-            db.session.rollback()
-        finally:
-            return render_template("newrecipe.html", recForm=recForm)
+	recForm = AddArticleForm()
+	# Temporarily passing this message object in order to display an added message under the form.
+	message = ""
 
-    elif request.method == 'GET':
-        return render_template('newrecipe.html', recForm=recForm)
+	if request.method == 'POST':
+		if not recForm.validate():
+			return render_template('newrecipe.html', recForm=recForm, message=message)
+		else:
+			newRec = Ingredient(recForm.recipeingreedients.data, recForm.recipetitle.data, recForm.recipedesc.data)
+			#An IntegrityError here indicates a duplicate was found. The id in the db is still
+			#generated for some reason but the entry isn't added, so there will be skipped id's (not a problem)
+			try:
+				db.session.add(newRec)
+				db.session.commit()
+				message = "Ingredient added: " + newRec.recipetitle
+			except exc.IntegrityError as e:
+				db.session.rollback()
+				recForm.recipetitle.errors.append("title already exists!")
+			finally:
+				return render_template('newrecipe.html', recForm=recForm, message=message)
+
+	elif request.method == 'GET':
+		return render_template('newrecipe.html', recForm=recForm, message=message)
+
 
 @app.route("/add/ingredient", methods=['GET','POST'])
 def addIngredient():

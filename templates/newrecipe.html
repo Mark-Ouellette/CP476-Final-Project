@@ -7,6 +7,7 @@
     <div class="row justify-content-center">
        <div class="col-12">
         <form class="form-horizontal" method="POST" action="/add/recipe">
+          {{ recForm.hidden_tag() }}
         <fieldset>
 
       <!-- Form Name -->
@@ -17,15 +18,31 @@
         <!-- Text input-->
 
         <div class="form-group">
+          {{ recForm.recipetitle.label }}
+            {% if recForm.recipetitle.errors %}
+              {% for error in recForm.recipetitle.errors %}
+                <p class="error-message">{{ error }} </p>
+              {% endfor %}
+            {% endif %}
+            {{ recForm.recipetitle }}
+            <!--
           <label class="col-md-4 control-label" for="Recipe Title">Recipe Name</label>  
             <div class="col-md-8">
               <input id="Recipe Title" name="Recipe Title" type="text" placeholder="" class="form-control input-md" required="">
             </div>
-            {{ recForm.recipetitle }}
+          -->
         </div>
 
         <!-- Select Multiple  gotta figure out how to populate based on ingredients in the db -->
         <div class="form-group">
+          {{ recForm.recipeingredients.label }}
+            {% if recForm.recipeingredients.errors %}
+              {% for error in recForm.recipeingredients.errors %}
+                <p class="error-message">{{ error }} </p>
+              {% endfor %}
+            {% endif %}
+            {{ recForm.recipeingredients }}
+            <!--
           <label class="col-md-4 control-label" for="selectmultiple">Select Multiple</label>
           <div class="col-md-8">
             <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
@@ -35,28 +52,39 @@
           </div>
           {{ recForm.recipeingredients }}
 
+            -->
         </div>
 
         <!-- Textarea -->
         <div class="form-group">
+          {{ recForm.recipedesc.label }}
+            {% if recForm.recipedesc.errors %}
+              {% for error in recForm.recipedesc.errors %}
+                <p class="error-message">{{ error }} </p>
+              {% endfor %}
+            {% endif %}
+            {{ recForm.recipedesc }}
+            <!--
           <label class="col-md-4 control-label" for="Instructions">How to make:</label>
           <div class="col-md-8">                     
             <textarea class="form-control" id="Instructions" name="Instructions"></textarea>
           </div>
           {{ recForm.recipedesc }}
-
+            -->
         </div>
 
         <!-- Button -->
+        <!--
         <div class="form-group">
           <label class="col-md-4 control-label" for="submitrecepie"></label>
           <div class="col-md-6">
             <button id="submitrecepie" name="submitrecepie" class="btn btn-primary">Submit</button>
           </div>
-          {{ recForm.submit(class="btn-primary") }}
 
-        </div>
+          
 
+        </div>--> 
+        {{ recForm.submit(class="btn-primary") }}
         </fieldset>
         </form>
 </div>

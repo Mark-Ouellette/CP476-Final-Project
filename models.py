@@ -9,9 +9,7 @@ try:
 except ImportError:
 	from urllib2 import urlopen
 
-	
 from googleplaces import GooglePlaces, types, lang
-
 
 import geocoder
 import json

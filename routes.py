@@ -76,6 +76,7 @@ def logout():
 	session.pop('email', None)
 	return redirect(url_for('index'))
 
+
 @app.route("/maps", methods=['GET','POST'])
 def maps():
 	#if 'email' not in session:

@@ -7,7 +7,16 @@
         <div class="section-content">
             <br>
             <br>
-            <h2>Discover the communities favourite drink recepies</h2>
+            <div class= header>
+                <ul class ="list list-inline">
+                    <li class = "list-inline-item">    
+                        <h2>Discover the communities favourite drink recepies</h2>
+                    </li>
+                    <li class="list-inline-item">
+                        <span><a class="fa fa-plus button" href= "{{ url_for('addrecipe') }}"></a>  Add Recipe</span>
+                    </li>
+                </ul>
+            </div>
             <br>
         </div>
 
@@ -68,4 +77,5 @@
         -->
     </div>
 </main>
+
 {% endblock %}

@@ -1,0 +1,71 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row justify-content-center">
+       <div class="col-12">
+        <form class="form-horizontal" method="POST" action="/add/recipe">
+          {{ recForm.hidden_tag() }}
+        <fieldset>
+
+      <!-- Form Name -->
+
+
+        <legend>Recipe Creation</legend>
+
+        <!-- Text input-->
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Recipe Title">Recipe Name</label>  
+            <div class="col-md-8">
+              {{ recForm.recipetitle }}
+              <!--<input id="Recipe Title" name="Recipe Title" type="text" placeholder="" class="form-control input-md" required="">-->
+            </div>
+          
+        </div>
+
+        <!-- Select Multiple  gotta figure out how to populate based on ingredients in the db -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="selectmultiple">Select Multiple</label>
+          <div class="col-md-8">
+            <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
+              <option value="1">Whisky</option>
+              <option value="2">Vodka</option>
+            </select>
+            not permanent {{ recForm.recipeingredients }}
+          </div>
+        </div>
+
+        <!-- Textarea -->
+        <div class="form-group">
+            
+          <label class="col-md-4 control-label" for="Instructions">How to make:</label>
+          <div class="col-md-8">
+          {{ recForm.recipedesc }}                  
+            <!--<textarea class="form-control" id="Instructions" name="Instructions"></textarea>-->
+          </div>
+          
+        </div>
+
+        <!-- Button -->
+        <!--
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="submitrecepie"></label>
+          <div class="col-md-6">
+            <button id="submitrecepie" name="submitrecepie" class="btn btn-primary">Submit</button>
+          </div>
+
+          
+
+        </div>-->
+        {{ recForm.submit(class="btn-primary") }}
+
+        <p>{{ message }} </p>
+        </fieldset>
+        </form>
+</div>
+</div>
+</div>
+{% endblock %}

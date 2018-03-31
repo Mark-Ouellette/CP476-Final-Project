@@ -25,10 +25,11 @@ class IngredientForm(FlaskForm):
 #NOT FINISHED YET
 #TODO: Figure out how to pass the ingredient options into the "SelectField"
 class AddArticleForm(FlaskForm):
-	ingredientOptions=[]
+	ingredientOptions=[("1","Whisky")]
 	recipetitle = StringField('Title', validators=[DataRequired("Please enter an article title"), Length(max=100, message="Titles may not be longer than 100 characters")])
 	recipeingredients = SelectField('Ingredients Included:', choices=ingredientOptions)
-	recipetext = TextAreaField('Article Text')
+	recipedesc = TextAreaField('Article Text')
+	submit = SubmitField('Add')
 
 	def initIngredients(ingredients):
 		self.ingredients = ingredients

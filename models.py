@@ -13,6 +13,7 @@ from googleplaces import GooglePlaces, types, lang
 
 import geocoder
 import json
+import datetime
 
 
 WATERLOO_COORDINATES = {"lat": 43.4719, "lng": -80.5230}
@@ -58,6 +59,15 @@ class Recipe(db.Model):
 	recipetitle = db.Column(db.String(100))
 	ingredients = db.relationship('Ingredient', secondary=ingredientsPerRecipe, lazy='subquery', 
 		backref=db.backref('ingredients', lazy=True))
+
+	def __init__(self, recipetitle, recipedesc, emails):
+		#self.ingredients = ingredients.title()
+
+		author = User.query.filter_by(email = emails).first()
+		self.recipedate = datetime.datetime.now()
+		self.authorid = author.uid
+		self.recipetitle = recipetitle.title()
+		self.recipedesc = recipedesc.title()
 
 class Ingredient(db.Model):
 	__tablename__ = 'ingredients'

@@ -118,7 +118,8 @@ def addrecipe():
 		if not recForm.validate():
 			return render_template('newrecipe.html', recForm=recForm, message=message)
 		else:
-			newRec = Ingredient(recForm.recipeingreedients.data, recForm.recipetitle.data, recForm.recipedesc.data)
+			newRec = Recipe(recForm.recipetitle.data, recForm.recipedesc.data, session['email'])
+
 			#An IntegrityError here indicates a duplicate was found. The id in the db is still
 			#generated for some reason but the entry isn't added, so there will be skipped id's (not a problem)
 			try:

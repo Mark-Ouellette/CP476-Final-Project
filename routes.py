@@ -6,7 +6,7 @@ import wtforms.ext.sqlalchemy.fields as f
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:TooL717@localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
 db.init_app(app)
 
 app.secret_key = "development-key"
@@ -24,7 +24,8 @@ def createDB():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+	recipes = Recipe.query.order_by(Recipe.recipedate).all()
+	return render_template("index.html", recipes=recipes)
 
 @app.route("/about")
 def about():
@@ -127,12 +128,19 @@ def addRecipe():
 		if not recForm.validate():
 			return render_template('newrecipe.html', recForm=recForm, message=message)
 		else:
-			newRec = Recipe(recForm.recipetitle.data, recForm.recipedesc.data, session['email'])
+
+			# The Recipe constructor adds each ingredient in this tuple as a child which handles the many-to-many relationship
+			ingredients = recForm.recipeingredients.data
+			newRec = Recipe(recForm.recipetitle.data, recForm.recipedesc.data, ingredients, session['email'])
 
 			# No Try/Catch here because the db is not configured to require unique titles
 			db.session.add(newRec)
 			db.session.commit()
 			message = "Recipe added: " + newRec.recipetitle
+			# NOTE:
+			# Just added this line, untested. Intention is to create a new form i.e. clear the form once a user submits.
+			# Maybe we just want to redirect them home?
+			recForm = AddArticleForm()
 			return render_template('newrecipe.html', recForm=recForm, message=message)
 
 	elif request.method == 'GET':

@@ -24,11 +24,11 @@ class IngredientForm(FlaskForm):
 	ingredientname = StringField('Ingredient', validators=[DataRequired("Please enter an ingredient name"), Length(max=40, message="Names may not be longer than 40 characters")])
 	submit = SubmitField('Add')
 
+# Utility function returning a query object which can be fed to query_factory's
 def getIngredients():
 	return Ingredient.query
 
 class AddArticleForm(FlaskForm):
-	ingredientOptions=[("1","Whisky")]
 	recipetitle = StringField('Title', validators=[DataRequired("Please enter an article title"), Length(max=100, message="Titles may not be longer than 100 characters")])
 	recipeingredients = QuerySelectMultipleField(query_factory=getIngredients, get_label='ingredientname')
 	recipedesc = TextAreaField('Article Text')

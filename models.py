@@ -43,6 +43,9 @@ class User(db.Model):
 	def check_password(self, password):
 		return check_password_hash(self.pwdhash, password)
 
+	def getFullName(self):
+		return self.firstname + " " + self.lastname
+
 
 #The db.Table defined here is the bridging table to create a many-to-many relationship here.
 ingredientsPerRecipe = db.Table('ingredientsPerRecipe',
@@ -55,19 +58,26 @@ class Recipe(db.Model):
 	recipeid = db.Column(db.Integer, primary_key=True)
 	authorid = db.Column(db.Integer, db.ForeignKey('users.uid'))
 	recipedate = db.Column(db.DateTime)
-	recipedesc = db.Column(db.Text)
 	recipetitle = db.Column(db.String(100))
+	recipedesc = db.Column(db.Text)
 	ingredients = db.relationship('Ingredient', secondary=ingredientsPerRecipe, lazy='subquery', 
 		backref=db.backref('ingredients', lazy=True))
 
-	def __init__(self, recipetitle, recipedesc, email):
-		#self.ingredients = ingredients.title()
-
+	def __init__(self, recipetitle, recipedesc, ingredients, email):
 		author = User.query.filter_by(email = email).first()
-		self.recipedate = datetime.datetime.now()
 		self.authorid = author.uid
+		self.recipedate = datetime.datetime.now()
 		self.recipetitle = recipetitle.title()
 		self.recipedesc = recipedesc.title()
+		for i in ingredients:
+			self.ingredients.append(i)
+
+	def getAuthorName(self, authorid):
+		author = User.query.get(authorid)
+		authorName = "Author not found"
+		if author is not None:
+			authorName = author.getFullName()
+		return authorName
 
 class Ingredient(db.Model):
 	__tablename__ = 'ingredients'

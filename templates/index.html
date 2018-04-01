@@ -10,7 +10,7 @@
             <div class= header>
                 <ul class ="list list-inline">
                     <li class = "list-inline-item">    
-                        <h2>Discover the communities favourite drink recepies</h2>
+                        <h2>Discover the communities favourite drink recipes</h2>
                     </li>
                     <li class="list-inline-item">
                         <span><a class="fa fa-plus button" href= "{{ url_for('addRecipe') }}"></a>  Add Recipe</span>
@@ -21,35 +21,40 @@
         </div>
 
         <div class="list-group">
-          <a href="{{ url_for('post') }}" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">Coke and Whisky</h5>
-              <small>3 days ago</small>
-            </div>
-            <p class="mb-1">Real simple one here you basically take some good ol coca cola and add about a shot of whisky (2 or 3 if ur feeling frisky)</p>
-            <small>Written By: Mark Ouellette</small>
-            <ul class="list-inline list-unstyled">
-            <li class="list-inline-item"><span><i class="fa fa-calendar"></i> 2 days, 8 hours </span></li>
-            <li class="list-inline-item">|</li>
-            <span><i class="fa fa-comment"></i> 2 comments</span>
-            <li class="list-inline-item">|</li>
-            <li class="list-inline-item">
-               <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-            </li>
-            <li class="list-inline-item">|</li>
-            <li class="list-inline-item">
-            <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
-              <span><i class="fa fa-facebook-square"></i></span>
-              <span><i class="fa fa-twitter-square"></i></span>
-              <span><i class="fa fa-google-plus-square"></i></span>
-            </li>
-            </ul>
-          </a>
-          <br>
+          {% for recipe in recipes %}
+            <a href="{{ url_for('post') }}" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"> {{recipe.recipetitle}}</h5>
+                <small>3 days ago - MAKE DYNAMIC FUNCTION</small>
+              </div>
+              <p class="mb-1">{{ recipe.recipedesc }}</p>
+              <small>Written By: {{ recipe.getAuthorName(recipe.authorid) }}</small>
+              <ul class="list-inline list-unstyled">
+              <li class="list-inline-item"><span><i class="fa fa-calendar"></i> 2 days, 8 hours - MAKE DYNAMIC </span></li>
+              <li class="list-inline-item">|</li>
+              <span><i class="fa fa-comment"></i> 2 comments</span>
+              <li class="list-inline-item">|</li>
+              <li class="list-inline-item">
+                 <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+              </li>
+              <li class="list-inline-item">|</li>
+              <li class="list-inline-item">
+              <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
+                <span><i class="fa fa-facebook-square"></i></span>
+                <span><i class="fa fa-twitter-square"></i></span>
+                <span><i class="fa fa-google-plus-square"></i></span>
+              </li>
+              </ul>
+            </a>
+            <br>
+          {% endfor %}
+
+
+          <!--TODO: DELETE IN NEXT COMMIT
           <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">List group item heading</h5>
@@ -68,6 +73,7 @@
             <small class="text-muted">Donec id elit non mi porta.</small>
           </a>
         </div>
+      -->
         <!--
         <div class="section-device">
             <img src="static/img/device.png">

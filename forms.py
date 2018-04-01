@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length
+from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
+from models import Ingredient
 
 class SignupForm(FlaskForm):
 	first_name = StringField('First Name', validators=[DataRequired("Please enter your first name")])
@@ -22,14 +24,13 @@ class IngredientForm(FlaskForm):
 	ingredientname = StringField('Ingredient', validators=[DataRequired("Please enter an ingredient name"), Length(max=40, message="Names may not be longer than 40 characters")])
 	submit = SubmitField('Add')
 
-#NOT FINISHED YET
-#TODO: Figure out how to pass the ingredient options into the "SelectField"
+def getIngredients():
+	return Ingredient.query
+
 class AddArticleForm(FlaskForm):
 	ingredientOptions=[("1","Whisky")]
 	recipetitle = StringField('Title', validators=[DataRequired("Please enter an article title"), Length(max=100, message="Titles may not be longer than 100 characters")])
-	recipeingredients = SelectField('Ingredients Included:', choices=ingredientOptions)
+	recipeingredients = QuerySelectMultipleField(query_factory=getIngredients, get_label='ingredientname')
 	recipedesc = TextAreaField('Article Text')
 	submit = SubmitField('Add')
 
-	def initIngredients(ingredients):
-		self.ingredients = ingredients

@@ -60,10 +60,10 @@ class Recipe(db.Model):
 	ingredients = db.relationship('Ingredient', secondary=ingredientsPerRecipe, lazy='subquery', 
 		backref=db.backref('ingredients', lazy=True))
 
-	def __init__(self, recipetitle, recipedesc, emails):
+	def __init__(self, recipetitle, recipedesc, email):
 		#self.ingredients = ingredients.title()
 
-		author = User.query.filter_by(email = emails).first()
+		author = User.query.filter_by(email = email).first()
 		self.recipedate = datetime.datetime.now()
 		self.authorid = author.uid
 		self.recipetitle = recipetitle.title()

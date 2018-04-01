@@ -27,14 +27,11 @@
         </div>
 
         <!-- Select Multiple  gotta figure out how to populate based on ingredients in the db -->
+        <!-- Done. Populates from the DB, required the fix in routes.py-->
         <div class="form-group">
           <label class="col-md-4 control-label" for="selectmultiple">Select Multiple</label>
           <div class="col-md-8">
-            <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
-              <option value="1">Whisky</option>
-              <option value="2">Vodka</option>
-            </select>
-            not permanent {{ recForm.recipeingredients }}
+            {{ recForm.recipeingredients }}
           </div>
         </div>
 

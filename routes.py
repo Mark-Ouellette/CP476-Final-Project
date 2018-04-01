@@ -2,15 +2,24 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from models import db, User, GPlace, Ingredient, Recipe
 from forms import SignupForm, LoginForm, AddressForm, IngredientForm, AddArticleForm
 from sqlalchemy import exc
+import wtforms.ext.sqlalchemy.fields as f 
+
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:TooL717@localhost/learningflask'
 db.init_app(app)
 
 app.secret_key = "development-key"
 
+# Override the wtforms.ext.sqlalchemy function as it was throwing a "ValueError" and has yet to be repaired.
+# Ref: https://github.com/wtforms/wtforms-sqlalchemy/issues/9
+def get_pk_from_identity(obj):
+    cls, key = f.identity_key(instance=obj)[:2]
+    return ':'.join(f.text_type(x) for x in key)                             
+
 @app.before_first_request
 def createDB():
+	f.get_pk_from_identity = get_pk_from_identity
 	db.create_all()
 
 @app.route("/")
@@ -106,7 +115,7 @@ def maps():
 		return render_template("maps.html", form=form, my_coordinates=my_coordinates, places=places)
 
 @app.route("/add/recipe", methods=['GET','POST'])
-def addrecipe():
+def addRecipe():
 	if 'email' not in session:
 		return redirect(url_for('login'))
 
@@ -120,17 +129,11 @@ def addrecipe():
 		else:
 			newRec = Recipe(recForm.recipetitle.data, recForm.recipedesc.data, session['email'])
 
-			#An IntegrityError here indicates a duplicate was found. The id in the db is still
-			#generated for some reason but the entry isn't added, so there will be skipped id's (not a problem)
-			try:
-				db.session.add(newRec)
-				db.session.commit()
-				message = "Ingredient added: " + newRec.recipetitle
-			except exc.IntegrityError as e:
-				db.session.rollback()
-				recForm.recipetitle.errors.append("title already exists!")
-			finally:
-				return render_template('newrecipe.html', recForm=recForm, message=message)
+			# No Try/Catch here because the db is not configured to require unique titles
+			db.session.add(newRec)
+			db.session.commit()
+			message = "Recipe added: " + newRec.recipetitle
+			return render_template('newrecipe.html', recForm=recForm, message=message)
 
 	elif request.method == 'GET':
 		return render_template('newrecipe.html', recForm=recForm, message=message)

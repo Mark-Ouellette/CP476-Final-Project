@@ -87,6 +87,14 @@ class Ingredient(db.Model):
 	def __init__(self, ingredientname):
 		self.ingredientname = ingredientname.title()
 
+class Comment(db.Model):
+	__tablename__ = 'comments'
+	commentid = db.Column(db.Integer, primary_key=True)
+	recipeid = db.Column(db.Integer, db.ForeignKey('recipes.recipeid'))
+	authorid = db.Column(db.Integer, db.ForeignKey('users.uid'))
+	commentdate = db.Column(db.DateTime)
+	commentdesc = db.Column(db.Text)
+
 class GPlace(object):
 	def address_to_latlng(self, address):
 		g = geocoder.google(address)

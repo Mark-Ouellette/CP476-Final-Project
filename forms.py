@@ -34,3 +34,7 @@ class AddArticleForm(FlaskForm):
 	recipedesc = TextAreaField('Article Text')
 	submit = SubmitField('Add')
 
+class AddCommentForm(FlaskForm):
+	commentdesc = TextAreaField('Comment')
+	submit = SubmitField('Add')
+

@@ -6,7 +6,7 @@ import wtforms.ext.sqlalchemy.fields as f
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:TooL717@localhost/learningflask'
 db.init_app(app)
 
 app.secret_key = "development-key"
@@ -25,6 +25,7 @@ def createDB():
 @app.route("/")
 def index():
 	recipes = Recipe.query.order_by(desc(Recipe.recipedate)).all()
+	recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.ingredientid == 2)
 	
 	filteredRecipes = Ingredient.query.filter_by(ingredientid = '9').all()
 	return render_template("index.html", recipes=recipes, filteredRecipes=filteredRecipes)

@@ -2,49 +2,62 @@
 
 {% block content %}
 <head>
-    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+   <!-- <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"> -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet'>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 </head>
-<main class="hero-section">
+<body>
     <div class="container">
-        <div class="section-tabs">
-            {% for place in places %}
-                <article>
-                    <!-- NOTE WE SHOULD MAKE A CSS CLASS FOR BOTH bar-icon AND walking-distance (change to bar-address. -->
-                    <img src="{{ place.icon }}"></img>
-                    <a class="name" href="{{ place.url }}" target="_blank">{{ place.name }}</a>
-                    <p class="bar-address">{{ place.formatted_address }}</p>
-                </article>
-            {% endfor %}
-        </div>
-
-        <div class="section-map">
-            <!--This nav class could be changed to reflect a bootstrap nav bar that we are using.-->
-            <div class="nav">
-                <form  method="POST" action="/maps">
-                    {{ form.hidden_tag() }}
-
-                    <div class="form-group">
-                        {% if form.address.errors %}
-                            {% for error in form.address.errors %}
-                                <p class="error-message">{{ error }}</p>
-                            {% endfor %}
-                        {% endif %}
-
-                        {{ form.address(placeholder="Explore Nearby") }}
-                    </div>
-                    
-                    {{ form.submit(class="btn-primary") }}
-
-                </form>
+        <div class="row">
+            <div class="row"><br><br></div>
+            <div class="col-1"></div>
+            <div class="col-md-3 justify-content-left">
+                <div class="section-tabs">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    {% for place in places %}
+                        <article>
+                            <!-- NOTE WE SHOULD MAKE A CSS CLASS FOR BOTH bar-icon AND walking-distance (change to bar-address. -->
+                            <img src="{{ place.icon }}"></img>
+                            <a class="name" href="{{ place.url }}" target="_blank">{{ place.name }}</a>
+                            <p class="bar-address">{{ place.formatted_address }}</p>
+                        </article>
+                    {% endfor %}
+                </div>
             </div>
+        
+            <div class="col-md-1"></div>
+            <div class="row justify-content-right">
+                <div class="section-map">
+                    <!--This nav class could be changed to reflect a bootstrap nav bar that we are using.-->
+                    <div class="nav">
+                        <form  method="POST" action="/maps">
+                            {{ form.hidden_tag() }}
 
-            <div id="map"></div>
+                            <div class="form-group">
+                                {% if form.address.errors %}
+                                    {% for error in form.address.errors %}
+                                        <p class="error-message">{{ error }}</p>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {{ form.address(placeholder="Explore Nearby") }}
+                            </div>
+                            
+                            {{ form.submit(class="btn-primary") }}
+
+                        </form>
+                    </div>
+
+                    <div id="map"></div>
+                </div>
+            </div>
         </div>        
     </div>
-</main>
+</body>
 
 <script type="text/javascript">
     var planes = [
@@ -69,5 +82,145 @@
     }
 
 </script>
+
+<style>
+    body {
+      background-color: #f4f4f4;
+      /*font-family: 'Open Sans', sans-serif;*/
+    }
+
+    a {
+        
+    }
+
+    .section-tabs {
+  
+}
+
+.section-tabs .places {
+  margin-top: 62px;
+  padding-right: 20px;
+}
+
+.section-tabs .places a,
+.section-tabs .places a:visited {
+  color: #3372df; 
+}
+
+
+.section-tabs article {
+  margin-top: 0px;
+  padding: 5px;
+}
+
+.section-tabs article img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  padding-right: 5px;
+}
+
+.section-tabs article .name {
+  font-size: 18px;
+}
+
+.section-tabs article .bar-address {
+  color: #6e6e6e;
+  font-size: 13px;
+  margin: 0;
+}
+
+.section-map {
+  float: right;
+  width: 660px;
+}
+
+.section-map .nav {
+  padding: 20px 0;
+}
+
+.section-map .form-group {
+  display: inline;
+}
+
+.section-map #address {
+  font-size: 14px;
+  margin-right: 10px;
+  width: 87%;
+}
+
+.section-map #submit {
+  font-size: 10px;
+  padding: 5px 15px;
+}
+
+#map {
+  height: 500px;
+}
+    .section-tabs {
+  float: left;
+  width: 340px;
+}
+
+.section-tabs .places {
+  margin-top: 62px;
+  padding-right: 20px;
+}
+
+.section-tabs .places a,
+.section-tabs .places a:visited {
+  color: #3372df; 
+}
+
+
+.section-tabs article {
+  margin-top: 0px;
+}
+
+.section-tabs article img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  padding-right: 5px;
+}
+
+.section-tabs article .name {
+  font-size: 18px;
+}
+
+.section-tabs article .bar-address {
+  color: #6e6e6e;
+  font-size: 13px;
+  margin: 0;
+}
+
+.section-map {
+  float: right;
+  width: 660px;
+}
+
+.section-map .nav {
+  padding: 20px 0;
+}
+
+.section-map .form-group {
+  display: inline;
+}
+
+.section-map #address {
+  font-size: 14px;
+  margin-right: 10px;
+  width: 87%;
+}
+
+.section-map #submit {
+  font-size: 10px;
+  padding: 5px 15px;
+}
+
+#map {
+  height: 500px;
+}
+</style>
 
 {% endblock %}

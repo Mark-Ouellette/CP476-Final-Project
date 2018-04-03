@@ -42,7 +42,6 @@ def recipe(id):
 				newComment = Comment(commForm.commentdesc.data, session['email'])
 				recipe.comments.append(newComment)
 				db.session.commit()
-				commForm.commentdesc.data = ""
 	return render_template("recipe.html", recipe=recipe, enableComments=enableComments, form=commForm)
 
 @app.route("/about")
@@ -55,21 +54,29 @@ def signup():
 		redirect(url_for('index'))
 
 	form = SignupForm()
+	existingUserError = ""
 
 	if request.method == 'POST':
 		if not form.validate():
-			return render_template("signup.html", form=form)
+			return render_template("signup.html", form=form, existingUserError=existingUserError)
 		else:
+			print("validated")
 			# TODO: Handle the duplicate email "IntegrityError" the same way duplicate ingredients are handled
 			newUser = User(form.first_name.data, form.last_name.data, form.email.data, form.password.data)
-			db.session.add(newUser)
-			db.session.commit()
+			try:
+				db.session.add(newUser)
+				db.session.commit()
+				print("session commited")
+				session['email'] = newUser.email
+				session['name'] = newUser.getFullName()
+				return redirect(url_for('index'))
+			except exc.IntegrityError:
+				db.session.rollback()
+				existingUserError = "User email already exists"
+				return render_template("signup.html", form=form, existingUserError=existingUserError)
 
-			session['email'] = newUser.email
-			session['name'] = newUser.getFullName()
-			return redirect(url_for('index'))
 	elif request.method == 'GET':
-		return render_template("signup.html", form=form)
+		return render_template("signup.html", form=form, existingUserError=existingUserError)
 
 @app.route("/login", methods=['GET','POST'])
 def login():
@@ -77,9 +84,7 @@ def login():
 		redirect(url_for('index'))
 
 	form = LoginForm()
-	print("here1")
 	if request.method == 'POST':
-		print("here2")
 		if not form.validate():
 			print("Can't validate")
 			return render_template("login.html", form=form)
@@ -160,7 +165,8 @@ def addRecipe():
 			# NOTE:
 			# Just added this line, untested. Intention is to create a new form i.e. clear the form once a user submits.
 			# Maybe we just want to redirect them home?
-			return redirect(url_for('index'))
+			recForm = AddArticleForm()
+			return render_template('newrecipe.html', recForm=recForm, message=message)
 
 	elif request.method == 'GET':
 		return render_template('newrecipe.html', recForm=recForm, message=message)

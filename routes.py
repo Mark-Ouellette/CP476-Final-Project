@@ -76,11 +76,14 @@ def login():
 		redirect(url_for('index'))
 
 	form = LoginForm()
-
+	print("here1")
 	if request.method == 'POST':
+		print("here2")
 		if not form.validate():
+			print("Can't validate")
 			return render_template("login.html", form=form)
 		else:
+			print("here3")
 			email = form.email.data
 			password = form.password.data
 

@@ -5,41 +5,13 @@
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
  </head>
-	<main class="container signup-section">
-		<div class="section-content">
-			<h2>Log in</h2>
-
-			<form method="POST" action="/login">
-				{{ form.hidden_tag() }}
-
-				<div class="form-group">
-					
-					{% if form.email.errors %}
-						{% for error in form.email.errors %}
-							<p class="error-message">{{ error }} </p>
-						{% endfor %}
-					{% endif %}
-					{{ form.email.label }}
-					{{ form.email }}
-				</div>
-
-				<div class="form-group">
-					{{ form.password.label }}
-					{% if form.password.errors %}
-						{% for error in form.password.errors %}
-							<p class="error-message">{{ error }} </p>
-						{% endfor %}
-					{% endif %}
-					{{ form.password }}
-				</div>
-
-				{{ form.submit(class="btn-primary") }}
-			</form>
-		</div>
-	</main>
-	<body>
-        <div class="container">
-        <form class="form-horizontal" role="form" method="POST" action="/login">
+	
+<body>
+	<br>
+	<br>
+	<div class="container">
+        <form class="form-horizontal" method="POST" action="/login">
+        	{{ form.hidden_tag() }}
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -55,7 +27,7 @@
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
 
-							{{ form.email(class_="form-control", placeholder="you@example.com")}}
+							{{ form.email(class="form-control", placeholder="you@example.com")}}
                             <!--<input type="text" name="email" class="form-control" id="email"
                                    placeholder="you@example.com" required autofocus>-->
                         </div>
@@ -80,10 +52,10 @@
                         <label class="sr-only" for="password">Password</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                            {{ form.password(class_="form-control", placeholder="Password")}}
+                            {{ form.password(class="form-control", placeholder="Password")}}
 
-                            <input type="password" name="password" class="form-control" id="password"
-                                   placeholder="Password" required>
+                            <!--<input type="password" name="password" class="form-control" id="password"
+                                   placeholder="Password" required>-->
                         </div>
                     </div>
                 </div>
@@ -104,7 +76,7 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
-                    <a class="btn btn-link" href="/password/reset">Register</a>
+                    <a class="btn btn-link" href="/signup">Register</a>
                 </div>
             </div>
         </form>
@@ -113,21 +85,6 @@
 
 	<style>
 
-		.form-group input:focus {
-		  outline: 0;
-		}
-
-		.form-group .error-message {
-		  margin: 10px 0;
-		  color: #db4437;
-		}
-
-		.form-group .error-message + input {
-		  border-bottom: 2px solid #db4437;
-		}
-
-		.error-message {
-		  color: #db4437;
-		}
+		
 	</style>
 {% endblock %}

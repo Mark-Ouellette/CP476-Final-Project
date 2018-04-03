@@ -8,6 +8,18 @@
     <form class="form-horizontal" role="form" method="POST" action="/signup">
     	{{ form.hidden_tag() }}
         <div class="row">
+        	<div class="col-md-3"></div>
+
+        	<div class="col-md-3">
+                <div class="form-control-feedback">
+                        <span class="text-danger align-middle">
+									<p class="error-message">  <i class="fa fa-close"></i>{{ existingUserError }} </p>
+                            <!-- Put name validation error messages here -->
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class = "row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <h2>Register New User</h2>
@@ -15,7 +27,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 field-label-responsive">
+        	            <div class="col-md-1"></div>
+
+            <div class="col-md-2 field-label-responsive">
                 <label for="name">First Name</label>
             </div>
             <div class="col-md-6">
@@ -43,7 +57,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 field-label-responsive">
+        	<div class="col-md-1"></div>
+            <div class="col-md-2 field-label-responsive">
                 <label for="name">Last Name</label>
             </div>
             <div class="col-md-6">
@@ -70,7 +85,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 field-label-responsive">
+            <div class="col-md-1"></div>
+            <div class="col-md-2 field-label-responsive">
                 <label for="email">E-Mail Address</label>
             </div>
             <div class="col-md-6">
@@ -98,7 +114,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 field-label-responsive">
+			<div class="col-md-1"></div>
+            <div class="col-md-2 field-label-responsive">
                 <label for="password">Password</label>
             </div>
             <div class="col-md-6">

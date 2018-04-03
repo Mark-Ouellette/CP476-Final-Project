@@ -25,7 +25,8 @@ def createDB():
 @app.route("/")
 def index():
 	recipes = Recipe.query.order_by(Recipe.recipedate).all()
-	return render_template("index.html", recipes=recipes)
+	filteredRecipes = Ingredient.query.filter_by(ingredientid = '9').all()
+	return render_template("index.html", recipes=recipes, filteredRecipes=filteredRecipes)
 
 @app.route("/recipes/<int:id>", methods=['GET'])
 def recipe(id):

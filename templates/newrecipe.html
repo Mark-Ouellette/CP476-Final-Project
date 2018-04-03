@@ -29,7 +29,7 @@
         <!-- Select Multiple  gotta figure out how to populate based on ingredients in the db -->
         <!-- Done. Populates from the DB, required the fix in routes.py-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="selectmultiple">Select Multiple</label>
+          <label class="col-md-4 control-label">Select Multiple</label>
           <div class="col-md-8">
             {{ recForm.recipeingredients }}
           </div>
@@ -38,9 +38,9 @@
         <!-- Textarea -->
         <div class="form-group">
             
-          <label class="col-md-4 control-label" for="Instructions">How to make:</label>
-          <div class="col-md-8">
-          {{ recForm.recipedesc }}                  
+          <label class="col-md-4 control-label">How to make:</label>
+          <div class="col-md-8"">
+            {{ recForm.recipedesc }}                  
             <!--<textarea class="form-control" id="Instructions" name="Instructions"></textarea>-->
           </div>
           

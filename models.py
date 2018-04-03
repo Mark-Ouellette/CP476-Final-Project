@@ -14,6 +14,7 @@ from googleplaces import GooglePlaces, types, lang
 import geocoder
 import json
 import datetime
+import string
 
 
 WATERLOO_COORDINATES = {"lat": 43.4719, "lng": -80.5230}
@@ -84,7 +85,7 @@ class Recipe(db.Model):
 	# TODO: DOUBLE CHECK THIS FUNCTION. results don't look right.
 	def getDaysSinceString(self):
 	    today = datetime.datetime.now()
-	    timeSince = today - datetime.datetime.combine(self.recipedate, datetime.time())
+	    timeSince = today - self.recipedate
 	    hours = timeSince.seconds//3600
 
 	    # Determine correct phrasing

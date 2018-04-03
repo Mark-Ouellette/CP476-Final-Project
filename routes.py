@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from models import db, User, Ingredient, Recipe, Comment, GPlace
 from forms import SignupForm, LoginForm, AddressForm, IngredientForm, AddArticleForm, AddCommentForm
-from sqlalchemy import exc
+from sqlalchemy import exc, desc
 import wtforms.ext.sqlalchemy.fields as f 
 
 
@@ -24,7 +24,7 @@ def createDB():
 
 @app.route("/")
 def index():
-	recipes = Recipe.query.order_by(Recipe.recipedate).all()
+	recipes = Recipe.query.order_by(desc(Recipe.recipedate)).all()
 	
 	filteredRecipes = Ingredient.query.filter_by(ingredientid = '9').all()
 	return render_template("index.html", recipes=recipes, filteredRecipes=filteredRecipes)

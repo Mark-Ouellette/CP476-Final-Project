@@ -25,36 +25,21 @@
             <a href="{{ url_for('recipe', id=recipe.recipeid) }}" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"> {{ recipe.recipetitle }}</h5>
-                <small>3 days ago - MAKE DYNAMIC FUNCTION</small>
               </div>
               <p class="mb-1">{{ recipe.recipedesc }}</p>
               <small>Written By: {{ recipe.getAuthorName(recipe.authorid) }}</small>
               <ul class="list-inline list-unstyled">
               <li class="list-inline-item"><span><i class="fa fa-calendar"></i> {{ recipe.getDaysSinceString() }}</span></li>
               <li class="list-inline-item">|</li>
-              <span><i class="fa fa-comment"></i> 2 comments</span>
-              <li class="list-inline-item">|</li>
-              <li class="list-inline-item">
-                 <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
-              </li>
-              <li class="list-inline-item">|</li>
-              <li class="list-inline-item">
-              <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
-                <span><i class="fa fa-facebook-square"></i></span>
-                <span><i class="fa fa-twitter-square"></i></span>
-                <span><i class="fa fa-google-plus-square"></i></span>
-              </li>
+              <span><i class="fa fa-comment"></i> {{ recipe.countComments() }} comments</span>
               </ul>
             </a>
             <br>
           {% endfor %}
+          <hr>
 
           {% for fr in filteredRecipes %}
-          <p>yay</p>
+            <p>yay</p>
           {% endfor %}
     </div>
 </main>

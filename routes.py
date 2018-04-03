@@ -42,6 +42,7 @@ def recipe(id):
 				newComment = Comment(commForm.commentdesc.data, session['email'])
 				recipe.comments.append(newComment)
 				db.session.commit()
+				commForm.commentdesc.data = ""
 	return render_template("recipe.html", recipe=recipe, enableComments=enableComments, form=commForm)
 
 @app.route("/about")
@@ -159,8 +160,7 @@ def addRecipe():
 			# NOTE:
 			# Just added this line, untested. Intention is to create a new form i.e. clear the form once a user submits.
 			# Maybe we just want to redirect them home?
-			recForm = AddArticleForm()
-			return render_template('newrecipe.html', recForm=recForm, message=message)
+			return redirect(url_for('index'))
 
 	elif request.method == 'GET':
 		return render_template('newrecipe.html', recForm=recForm, message=message)

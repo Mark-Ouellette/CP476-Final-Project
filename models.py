@@ -63,7 +63,7 @@ class Recipe(db.Model):
 	recipedesc = db.Column(db.Text)
 	ingredients = db.relationship('Ingredient', secondary=ingredientsPerRecipe, lazy='subquery', 
 		backref=db.backref('ingredients', lazy=True))
-	comments = db.relationship('Comment', order_by="Comment.commentdate")
+	comments = db.relationship('Comment', order_by="desc(Comment.commentdate)")
 
 	# No comments in the constructor as a recipe is initialized without comments
 	def __init__(self, recipetitle, recipedesc, ingredients, email):
@@ -81,6 +81,9 @@ class Recipe(db.Model):
 		if author is not None:
 			authorName = author.getFullName()
 		return authorName
+
+	def countComments(self):
+		return len(self.comments)
 
 	# TODO: DOUBLE CHECK THIS FUNCTION. results don't look right.
 	def getDaysSinceString(self):

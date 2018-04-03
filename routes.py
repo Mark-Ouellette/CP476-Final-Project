@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from models import db, User, Ingredient, Recipe, Comment, GPlace
-from forms import SignupForm, LoginForm, AddressForm, IngredientForm, AddArticleForm
+from forms import SignupForm, LoginForm, AddressForm, IngredientForm, AddArticleForm, AddCommentForm
 from sqlalchemy import exc
 import wtforms.ext.sqlalchemy.fields as f 
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:TooL717@localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
 db.init_app(app)
 
 app.secret_key = "development-key"
@@ -29,14 +29,20 @@ def index():
 	filteredRecipes = Ingredient.query.filter_by(ingredientid = '9').all()
 	return render_template("index.html", recipes=recipes, filteredRecipes=filteredRecipes)
 
-@app.route("/recipes/<int:id>", methods=['GET'])
+@app.route("/recipes/<int:id>", methods=['GET', 'POST'])
 def recipe(id):
-	if 'email' in session:
-		# Display the add comment box
-		pass
+	recipe = Recipe.query.get_or_404(id)
+	enableComments = False
+	commForm = AddCommentForm()
 
-	recipe = Recipe.query.get(id)
-	return render_template("recipe.html", recipe=recipe)
+	if 'email' in session:
+		enableComments = True
+		if request.method == 'POST':
+			if commForm.validate():
+				newComment = Comment(commForm.commentdesc.data, session['email'])
+				recipe.comments.append(newComment)
+				db.session.commit()
+	return render_template("recipe.html", recipe=recipe, enableComments=enableComments, form=commForm)
 
 @app.route("/about")
 def about():

@@ -30,7 +30,16 @@
 
           <hr>
 
+          <!-- Ingredients -->
+          <h6>Key Ingredients: </h6>
+          {% for ingredient in recipe.ingredients %}
+            <span class="badge badge-primary">{{ ingredient.ingredientname }}</span>
+          {% endfor %}
+
+          <hr>
+
           <!-- Post Content -->
+          <h6>Recipe: </h6>
           <p>{{ recipe.recipedesc }}</p>
 
           <hr>

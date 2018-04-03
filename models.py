@@ -79,6 +79,21 @@ class Recipe(db.Model):
 			authorName = author.getFullName()
 		return authorName
 
+	# TODO: DOUBLE CHECK THIS FUNCTION. results don't look right.
+	def getDaysSinceString(self):
+	    today = datetime.datetime.now()
+	    timeSince = today - datetime.datetime.combine(self.recipedate, datetime.time())
+	    hours = timeSince.seconds//3600
+
+	    # Determine correct phrasing
+	    hourString = "hour" if hours == 1 else "hours"
+	    dayString = "day" if timeSince.days == 1 else "days"
+	    if timeSince.days == 0:
+	    	return "{} {}".format(hours, hourString)
+	    else:
+	    	return "{} {}, {} {}".format(timeSince.days, dayString, hours, hourString)
+	    	
+
 class Ingredient(db.Model):
 	__tablename__ = 'ingredients'
 	ingredientid = db.Column(db.Integer, primary_key=True)

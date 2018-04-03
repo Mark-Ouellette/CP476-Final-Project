@@ -22,15 +22,15 @@
 
         <div class="list-group">
           {% for recipe in recipes %}
-            <a href="{{ url_for('post') }}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href="{{ url_for('recipe', id=recipe.recipeid) }}" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1"> {{recipe.recipetitle}}</h5>
+                <h5 class="mb-1"> {{ recipe.recipetitle }}</h5>
                 <small>3 days ago - MAKE DYNAMIC FUNCTION</small>
               </div>
               <p class="mb-1">{{ recipe.recipedesc }}</p>
               <small>Written By: {{ recipe.getAuthorName(recipe.authorid) }}</small>
               <ul class="list-inline list-unstyled">
-              <li class="list-inline-item"><span><i class="fa fa-calendar"></i> 2 days, 8 hours - MAKE DYNAMIC </span></li>
+              <li class="list-inline-item"><span><i class="fa fa-calendar"></i> {{ recipe.getDaysSinceString() }}</span></li>
               <li class="list-inline-item">|</li>
               <span><i class="fa fa-comment"></i> 2 comments</span>
               <li class="list-inline-item">|</li>
@@ -52,35 +52,6 @@
             </a>
             <br>
           {% endfor %}
-
-
-          <!--TODO: DELETE IN NEXT COMMIT
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">List group item heading</h5>
-              <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small class="text-muted">Donec id elit non mi porta.</small>
-          </a>
-          <br>
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">List group item heading</h5>
-              <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small class="text-muted">Donec id elit non mi porta.</small>
-          </a>
-        </div>
-      -->
-        <!--
-        <div class="section-device">
-            <img src="static/img/device.png">
-                </div>
-        
-        <div class="clearfix"></div>
-        -->
     </div>
 </main>
 

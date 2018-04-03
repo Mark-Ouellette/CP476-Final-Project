@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-from models import db, User, GPlace, Ingredient, Recipe
+from models import db, User, Ingredient, Recipe, Comment, GPlace
 from forms import SignupForm, LoginForm, AddressForm, IngredientForm, AddArticleForm
 from sqlalchemy import exc
 import wtforms.ext.sqlalchemy.fields as f 
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:TooL717@localhost/learningflask'
 db.init_app(app)
 
 app.secret_key = "development-key"
@@ -27,13 +27,18 @@ def index():
 	recipes = Recipe.query.order_by(Recipe.recipedate).all()
 	return render_template("index.html", recipes=recipes)
 
+@app.route("/recipes/<int:id>", methods=['GET'])
+def recipe(id):
+	if 'email' in session:
+		# Display the add comment box
+		pass
+
+	recipe = Recipe.query.get(id)
+	return render_template("recipe.html", recipe=recipe)
+
 @app.route("/about")
 def about():
     return render_template("about.html")
-
-@app.route("/post")
-def post():
-	return render_template("post.html")
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -52,6 +57,7 @@ def signup():
 			db.session.commit()
 
 			session['email'] = newUser.email
+			session['name'] = newUser.getFullName()
 			return redirect(url_for('index'))
 	elif request.method == 'GET':
 		return render_template("signup.html", form=form)
@@ -73,6 +79,7 @@ def login():
 			user = User.query.filter_by(email=email).first()
 			if user is not None and user.check_password(password):
 				session['email'] = email
+				session['name'] = user.getFullName()
 				return redirect(url_for('index'))
 			else:
 				# TODO: Expand to say whether the email or password failed
@@ -84,6 +91,7 @@ def login():
 @app.route("/logout")
 def logout():
 	session.pop('email', None)
+	session.pop('name', None)
 	return redirect(url_for('index'))
 
 

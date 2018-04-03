@@ -32,8 +32,8 @@ class User(db.Model):
 	recipes = db.relationship("Recipe")
 
 	def __init__(self, firstname, lastname, email, password):
-		self.firstname = firstname.title()
-		self.lastname = lastname.title()
+		self.firstname = string.capwords(firstname)
+		self.lastname = string.capwords(lastname)
 		self.email = email.lower()
 		self.set_password(password)
 	 
@@ -62,13 +62,15 @@ class Recipe(db.Model):
 	recipedesc = db.Column(db.Text)
 	ingredients = db.relationship('Ingredient', secondary=ingredientsPerRecipe, lazy='subquery', 
 		backref=db.backref('ingredients', lazy=True))
+	comments = db.relationship('Comment', order_by="Comment.commentdate")
 
+	# No comments in the constructor as a recipe is initialized without comments
 	def __init__(self, recipetitle, recipedesc, ingredients, email):
 		author = User.query.filter_by(email = email).first()
 		self.authorid = author.uid
 		self.recipedate = datetime.datetime.now()
-		self.recipetitle = recipetitle.title()
-		self.recipedesc = recipedesc.title()
+		self.recipetitle = string.capwords(recipetitle)
+		self.recipedesc = recipedesc
 		for i in ingredients:
 			self.ingredients.append(i)
 
@@ -100,7 +102,7 @@ class Ingredient(db.Model):
 	ingredientname = db.Column(db.String(40), unique=True)
 
 	def __init__(self, ingredientname):
-		self.ingredientname = ingredientname.title()
+		self.ingredientname = string.capwords(ingredientname)
 
 class Comment(db.Model):
 	__tablename__ = 'comments'
@@ -109,6 +111,20 @@ class Comment(db.Model):
 	authorid = db.Column(db.Integer, db.ForeignKey('users.uid'))
 	commentdate = db.Column(db.DateTime)
 	commentdesc = db.Column(db.Text)
+	
+	def __init__(self, commentdesc, email):
+		author = User.query.filter_by(email = email).first()
+		self.authorid = author.uid
+		self.commentdate = datetime.datetime.now()
+		self.commentdesc = commentdesc
+	
+	def getAuthorName(self, authorid):
+		author = User.query.get(authorid)
+		authorName = "Author not found"
+		if author is not None:
+			authorName = author.getFullName()
+		return authorName
+
 
 class GPlace(object):
 	def address_to_latlng(self, address):

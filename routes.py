@@ -61,7 +61,6 @@ def signup():
 		if not form.validate():
 			return render_template("signup.html", form=form, existingUserError=existingUserError)
 		else:
-			print("validated")
 			# TODO: Handle the duplicate email "IntegrityError" the same way duplicate ingredients are handled
 			newUser = User(form.first_name.data, form.last_name.data, form.email.data, form.password.data)
 			try:
@@ -163,11 +162,7 @@ def addRecipe():
 			db.session.add(newRec)
 			db.session.commit()
 			message = "Recipe added: " + newRec.recipetitle
-			# NOTE:
-			# Just added this line, untested. Intention is to create a new form i.e. clear the form once a user submits.
-			# Maybe we just want to redirect them home?
-			recForm = AddArticleForm()
-			return render_template('newrecipe.html', recForm=recForm, message=message)
+			return redirect(url_for('index'))
 
 	elif request.method == 'GET':
 		return render_template('newrecipe.html', recForm=recForm, message=message)

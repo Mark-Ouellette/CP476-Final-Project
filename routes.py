@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from models import db, User, Ingredient, Recipe, Comment, GPlace
 from forms import SignupForm, LoginForm, AddressForm, IngredientForm, AddArticleForm, AddCommentForm
-from sqlalchemy import exc
+from sqlalchemy import exc, desc
 import wtforms.ext.sqlalchemy.fields as f 
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:TooL717@localhost/learningflask'
 db.init_app(app)
 
 app.secret_key = "development-key"
@@ -24,7 +24,7 @@ def createDB():
 
 @app.route("/")
 def index():
-	recipes = Recipe.query.order_by(Recipe.recipedate).all()
+	recipes = Recipe.query.order_by(desc(Recipe.recipedate)).all()
 	
 	filteredRecipes = Ingredient.query.filter_by(ingredientid = '9').all()
 	return render_template("index.html", recipes=recipes, filteredRecipes=filteredRecipes)
@@ -42,6 +42,7 @@ def recipe(id):
 				newComment = Comment(commForm.commentdesc.data, session['email'])
 				recipe.comments.append(newComment)
 				db.session.commit()
+				commForm.commentdesc.data = ""
 	return render_template("recipe.html", recipe=recipe, enableComments=enableComments, form=commForm)
 
 @app.route("/about")
@@ -156,8 +157,7 @@ def addRecipe():
 			# NOTE:
 			# Just added this line, untested. Intention is to create a new form i.e. clear the form once a user submits.
 			# Maybe we just want to redirect them home?
-			recForm = AddArticleForm()
-			return render_template('newrecipe.html', recForm=recForm, message=message)
+			return redirect(url_for('index'))
 
 	elif request.method == 'GET':
 		return render_template('newrecipe.html', recForm=recForm, message=message)

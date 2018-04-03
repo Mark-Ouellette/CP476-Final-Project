@@ -35,6 +35,6 @@ class AddArticleForm(FlaskForm):
 	submit = SubmitField('Add')
 
 class AddCommentForm(FlaskForm):
-	commentdesc = TextAreaField('Comment')
-	submit = SubmitField('Add')
+	commentdesc = TextAreaField(validators=[DataRequired("Please enter a comment before submitting"), Length(max=400, message="Comments may not be longer than 400 characters")])
+	submit = SubmitField('Submit')
 

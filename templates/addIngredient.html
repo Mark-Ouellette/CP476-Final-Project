@@ -3,22 +3,27 @@
 {% block content %}
 	<main class="container signup-section">
 			<div class="section-content">
+				<br>
 				<h2>Add an Ingredient</h2>
 
 				<form method="POST" action="/add/ingredient">
 					{{ ingForm.hidden_tag() }}
 
 					<div class="form-group">
-						{{ ingForm.ingredientname.label }}
-						{% if ingForm.ingredientname.errors %}
-							{% for error in ingForm.ingredientname.errors %}
-								<p class="error-message">{{ error }} </p>
-							{% endfor %}
-						{% endif %}
-						{{ ingForm.ingredientname }}
+						<div class="form-control-feedback">
+							<span class="text-danger align-middle">
+								{% if ingForm.ingredientname.errors %}
+									{% for error in ingForm.ingredientname.errors %}
+										<p class="error-message"> <i class="fa fa-close"></i> {{ error }} </p>
+									{% endfor %}
+								{% endif %}
+							</span>
+							<label>Ingredient Name</label>
+								{{ ingForm.ingredientname }}
+						</div>
 					</div>
 
-					{{ ingForm.submit(class="btn-primary") }}
+					{{ ingForm.submit(class="btn btn-primary") }}
 				</form>
 
 				<p>{{ message }} </p>

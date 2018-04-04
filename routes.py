@@ -8,7 +8,7 @@ import wtforms.ext.sqlalchemy.fields as f
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
 db.init_app(app)
 
 app.secret_key = "development-key"
@@ -64,7 +64,7 @@ def signup():
 		redirect(url_for('index'))
 
 	form = SignupForm()
-	existingUserError = ""
+	existingUserError = []
 
 	if request.method == 'POST':
 		if not form.validate():
@@ -81,7 +81,7 @@ def signup():
 				return redirect(url_for('index'))
 			except exc.IntegrityError:
 				db.session.rollback()
-				existingUserError = "User email already exists"
+				existingUserError.append("User email already exists")
 				return render_template("signup.html", form=form, existingUserError=existingUserError)
 
 	elif request.method == 'GET':

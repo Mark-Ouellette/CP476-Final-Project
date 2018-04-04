@@ -13,7 +13,12 @@
         	<div class="col-md-3">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-									<p class="error-message">  <i class="fa fa-close"></i>{{ existingUserError }} </p>
+                        	{% if existingUserError %}
+								{% for error in existingUserError %}
+									<p class="error-message">  <i class="fa fa-close"></i>{{ error }} </p>
+								{% endfor %}
+							{% endif %}
+									
                             <!-- Put name validation error messages here -->
                         </span>
                 </div>
@@ -48,7 +53,7 @@
                         <span class="text-danger align-middle">
                         	{% if form.first_name.errors %}
 								{% for error in form.first_name.errors %}
-									<p class="error-message">{{ error }} </p>
+									<p class="error-message">i class="fa fa-close"></i> {{ error }} </p>
 								{% endfor %}
 							{% endif %}
                             <!-- Put name validation error messages here -->
@@ -76,7 +81,7 @@
                         <span class="text-danger align-middle">
                         	{% if form.last_name.errors %}
 								{% for error in form.last_name.errors %}
-									<p class="error-message">{{ error }} </p>
+									<p class="error-message"><i class="fa fa-close"></i> {{ error }} </p>
 								{% endfor %}
 							{% endif %}
                             <!-- Put name validation error messages here -->
@@ -106,7 +111,7 @@
                             <!-- Put e-mail validation error messages here -->
 							{% if form.email.errors %}
 								{% for error in form.email.errors %}
-									<p class="error-message">{{ error }} </p>
+									<p class="error-message"><i class="fa fa-close"></i> {{ error }} </p>
 								{% endfor %}
 							{% endif %}
                         </span>
@@ -134,7 +139,7 @@
                         <span class="text-danger align-middle">
 							{% if form.password.errors %}
 								{% for error in form.password.errors %}
-									<p class="error-message">{{ error }} </p>
+									<p class="error-message"><i class="fa fa-close"></i> {{ error }} </p>
 								{% endfor %}
 							{% endif %}
                         </span>

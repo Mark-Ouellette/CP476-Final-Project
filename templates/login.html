@@ -38,7 +38,7 @@
                         <span class="text-danger align-middle">
                             {% if form.email.errors %}
 								{% for error in form.email.errors %}
-									<i class="fa fa-close"></i> <p class="error-message">{{ error }} </p>
+									<p class="error-message"><i class="fa fa-close"></i> {{ error }} </p>
 								{% endfor %}
 							{% endif %}
                         </span>
@@ -64,7 +64,7 @@
                         <span class="text-danger align-middle">
                         {% if form.password.errors %}
 								{% for error in form.password.errors %}
-									<i class="fa fa-close"></i> <p class="error-message">{{ error }} </p>
+									<p class="error-message"><i class="fa fa-close"></i> {{ error }} </p>
 								{% endfor %}
 							{% endif %}   
                         </span>

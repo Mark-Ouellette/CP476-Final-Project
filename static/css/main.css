@@ -23,10 +23,7 @@ a {
   display: inline-block;
 }
 
-.container {
-  width: 1000px;
-  margin: 0 auto;
-}
+
 
 .pull-left {
   float: left;
@@ -90,10 +87,7 @@ a {
  * Header
  */
 
-header {
-  background-color: #fff;
-  padding: 25px 0;
-}
+
 
 .title {
   float: left;
@@ -236,7 +230,7 @@ header {
 
 
 .section-tabs article {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .section-tabs article img {

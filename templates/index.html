@@ -20,8 +20,11 @@
         </div>
 
         <div class="card my-4">
-          <h5 class="card-header">Filter by Ingredient</h5>
-          <div class="card-body">
+          <span data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <h5 class="card-header">Filter by Ingredient <i class="fa fa-angle-down"></i></h5>
+          </span>
+          <div class="collapse" id="collapseExample">  
+        <div class="card card-body">
             <form method="POST" action="/">
               <div class="btn-group-toggle" data-toggle="buttons">
                 {% for i in ingredients %}
@@ -40,6 +43,7 @@
               <input class="btn btn-primary" type="submit" value="Filter">
             </form>
           </div>
+        </div>
         </div>
 
         <div class="list-group">

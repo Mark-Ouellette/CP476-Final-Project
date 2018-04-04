@@ -66,7 +66,7 @@
     {% endfor %}
     ];
 
-    var map = L.map('map').setView([{{ my_coordinates["lat"] }}, {{ my_coordinates["lng"] }}], 15);
+    var map = L.map('map').setView([{{ my_coordinates["lat"] }}, {{ my_coordinates["lng"] }}], 30);
     mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
     L.tileLayer(
         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

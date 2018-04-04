@@ -99,7 +99,6 @@ class Recipe(db.Model):
 	    else:
 	    	return "{} {}, {} {}".format(timeSince.days, dayString, hours, hourString)
 	    	
-
 class Ingredient(db.Model):
 	__tablename__ = 'ingredients'
 	ingredientid = db.Column(db.Integer, primary_key=True)
@@ -128,7 +127,6 @@ class Comment(db.Model):
 		if author is not None:
 			authorName = author.getFullName()
 		return authorName
-
 
 class GPlace(object):
 	def address_to_latlng(self, address):

@@ -11,52 +11,35 @@
         <fieldset>
 
       <!-- Form Name -->
-
-
-        <legend>Recipe Creation</legend>
+        <legend>Create a Recipe</legend>
 
         <!-- Text input-->
-
         <div class="form-group">
-          <label class="col-md-4 control-label" for="Recipe Title">Recipe Name</label>  
-            <div class="col-md-8">
-              {{ recForm.recipetitle }}
-              <!--<input id="Recipe Title" name="Recipe Title" type="text" placeholder="" class="form-control input-md" required="">-->
-            </div>
-          
+        <div class="col-md-6">
+          <label class="col-md-4 control-label">Recipe Name</label>
+          <br>
+          {{ recForm.recipetitle(class="col-md-8") }}
+          <hr>
+        </div>
         </div>
 
-        <!-- Select Multiple  gotta figure out how to populate based on ingredients in the db -->
-        <!-- Done. Populates from the DB, required the fix in routes.py-->
         <div class="form-group">
-          <label class="col-md-4 control-label">Select Multiple</label>
-          <div class="col-md-8">
-            {{ recForm.recipeingredients }}
+          <div class="col-md-6">
+            <label class="col-md-4 control-label">Select Ingredients</label>
+              <div class="btn-group-toggle" data-toggle="buttons">
+                {{ recForm.recipeingredients(class="btn btn-secondary")}}
+              </div>
+            <hr>
           </div>
         </div>
 
         <!-- Textarea -->
         <div class="form-group">
-            
-          <label class="col-md-4 control-label">How to make:</label>
-          <div class="col-md-8"">
-            {{ recForm.recipedesc }}                  
-            <!--<textarea class="form-control" id="Instructions" name="Instructions"></textarea>-->
-          </div>
-          
+          <label class="col-md-4 control-label">Recipe Description:</label>
+          <br>
+          {{ recForm.recipedesc(class="col-md-6", rows=15, cols=20) }}
         </div>
 
-        <!-- Button -->
-        <!--
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="submitrecepie"></label>
-          <div class="col-md-6">
-            <button id="submitrecepie" name="submitrecepie" class="btn btn-primary">Submit</button>
-          </div>
-
-          
-
-        </div>-->
         {{ recForm.submit(class="btn-primary") }}
 
         <p>{{ message }} </p>

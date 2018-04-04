@@ -10,14 +10,36 @@
             <div class= header>
                 <ul class ="list list-inline">
                     <li class = "list-inline-item">    
-                        <h2>Discover the communities favourite drink recipes</h2>
+                        <h2>Discover the Community's Favourite Recipes!</h2>
                     </li>
                     <li class="list-inline-item">
-                        <span><a class="fa fa-plus button" href= "{{ url_for('addRecipe') }}"> Add Recipe</a></span>
+                        <span class="btn btn-outline-primary btn-sm"><a class="fa fa-plus button" href= "{{ url_for('addRecipe') }}">Add Recipe</a></span>
                     </li>
                 </ul>
             </div>
-            <br>
+        </div>
+
+        <div class="card my-4">
+          <h5 class="card-header">Filter by Ingredient</h5>
+          <div class="card-body">
+            <form method="POST" action="/">
+              <div class="btn-group-toggle" data-toggle="buttons">
+                {% for i in ingredients %}
+                  {% if i.ingredientid in filters %}
+                    <label class="btn btn-outline-dark btn-sm active">
+                      <input type="checkbox" checked name="{{ i.ingredientid }}" class="active" autocomplete="off">{{ i.ingredientname }}
+                    </label>
+                  {% else %}
+                    <label class="btn btn-outline-dark btn-sm">
+                      <input type="checkbox" name="{{ i.ingredientid }}" class="active" autocomplete="off">{{ i.ingredientname }}
+                    </label>
+                  {% endif %}
+                {% endfor %}
+                <br><br>
+              </div>
+              <input class="btn btn-primary" type="submit" value="Filter">
+            </form>
+          </div>
         </div>
 
         <div class="list-group">
@@ -32,15 +54,17 @@
               <li class="list-inline-item"><span><i class="fa fa-calendar"></i> {{ recipe.getDaysSinceString() }}</span></li>
               <li class="list-inline-item">|</li>
               <span><i class="fa fa-comment"></i> {{ recipe.countComments() }} comments</span>
+              <li class="list-inline-item">|</li>
+              <span><i class="fa fa-glass"></i>
+                {% for i in recipe.ingredients %}
+                  <span class="badge badge-secondary">{{ i.ingredientname }}</span>
+                {% endfor %}
+              </span>
               </ul>
             </a>
             <br>
           {% endfor %}
           <hr>
-
-          {% for fr in filteredRecipes %}
-            <p>yay</p>
-          {% endfor %}
     </div>
 </main>
 

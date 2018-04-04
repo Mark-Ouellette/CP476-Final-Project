@@ -22,13 +22,20 @@ def createDB():
 	f.get_pk_from_identity = get_pk_from_identity
 	db.create_all()
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
 	recipes = Recipe.query.order_by(desc(Recipe.recipedate)).all()
-	recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.ingredientid == 2)
-	
-	filteredRecipes = Ingredient.query.filter_by(ingredientid = '9').all()
-	return render_template("index.html", recipes=recipes, filteredRecipes=filteredRecipes)
+	ingredients = Ingredient.query.order_by(Ingredient.ingredientname).all()
+	filters=[]
+	if request.method == 'POST':
+		for i in ingredients:
+			f = request.form.get(str(i.ingredientid))
+			if f:
+				filters.append(i.ingredientid)
+		if len(filters) > 0:
+			recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.ingredientid.in_(filters))
+
+	return render_template("index.html", recipes=recipes, ingredients=ingredients, filters=filters)
 
 @app.route("/recipes/<int:id>", methods=['GET', 'POST'])
 def recipe(id):

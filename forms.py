@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from wtforms import widgets, StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from models import Ingredient
@@ -26,15 +26,22 @@ class IngredientForm(FlaskForm):
 
 # Utility function returning a query object which can be fed to query_factory's
 def getIngredients():
-	return Ingredient.query
+	return Ingredient.query.order_by(Ingredient.ingredientname)
+
+class QueryMultiCheckboxField(QuerySelectMultipleField):
+	widget = widgets.ListWidget()
+	option_widget = widgets.CheckboxInput()
 
 class AddArticleForm(FlaskForm):
 	recipetitle = StringField('Title', validators=[DataRequired("Please enter an article title"), Length(max=100, message="Titles may not be longer than 100 characters")])
-	recipeingredients = QuerySelectMultipleField(query_factory=getIngredients, get_label='ingredientname')
+	recipeingredients = QueryMultiCheckboxField(query_factory=getIngredients, get_label='ingredientname')
 	recipedesc = TextAreaField('Article Text')
 	submit = SubmitField('Add')
 
 class AddCommentForm(FlaskForm):
 	commentdesc = TextAreaField(validators=[DataRequired("Please enter a comment before submitting"), Length(max=400, message="Comments may not be longer than 400 characters")])
 	submit = SubmitField('Submit')
+
+
+
 
